@@ -2,11 +2,11 @@
 
 ## Add Tracks to a Playlist
 
-### Item 40
+~~### Item 40~~
 
-In this section, you will implement a process for adding a song from the search results track list to the user’s custom playlist.
+~~In this section, you will implement a process for adding a song from the search results track list to the user’s custom playlist.~~
 
-You will add a method to App.js called `addTrack` that adds a song to the playlist state. The application passes the method through a series of components to Track. The user can trigger the `.addTrack()` method by clicking the `+` sign from the search results list.
+~~You will add a method to App.js called `addTrack` that adds a song to the playlist state. The application passes the method through a series of components to Track. The user can trigger the `.addTrack()` method by clicking the `+` sign from the search results list.~~
 
 ### Item 41
 

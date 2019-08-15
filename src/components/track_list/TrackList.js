@@ -6,7 +6,6 @@ import Track from '../track/Track';
 class TrackList extends React.Component {
   render() {
     const tracks = this.props.list.map(track => <Track key={track.id} track={track} />);
-    // const tracks = [];
     return (
       <div className="TrackList">
         {tracks}

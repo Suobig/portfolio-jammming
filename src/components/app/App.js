@@ -3,7 +3,6 @@ import "./App.css";
 import SearchBar from "../search_bar/SearchBar";
 import SearchResults from "../search_results/SearchResults";
 import Playlist from "../playlist/Playlist";
-import * as _array from 'lodash/array';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,42 +14,62 @@ class App extends React.Component {
           name: "Help",
           artist: "The Beatles",
           album: "Help",
-          isAdded: true,
-          addTrack: this.addTrack.bind(this),
-        }
-      ],
-      playlistName: "My Playlist",
-      playlistTracks: [
+          isAdded: false,
+          addToPlaylist: this.addTrackToPlaylist.bind(this),
+          removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
+        },
         {
           id: 2,
           name: "Umbrella",
           artist: "Rihanna",
-          album: "Good Girl Gone Bad"
+          album: "Good Girl Gone Bad",
+          isAdded: false,
+          addToPlaylist: this.addTrackToPlaylist.bind(this),
+          removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
         }
-      ]
+      ],
+      playlistName: "My Playlist",
+      playlist: []
     };
   }
 
-  addTrack(track) {
-    const newTrack = { ...track };
-    delete newTrack.addTrack;
-    newTrack.removeTrack = this.removeTrack.bind(this);
-    newTrack.isAdded = true;
-    
+  isTrackInPlaylist(track) {
+    const index = this.state.playlist.findIndex(item => item.id === track.id)
+    return index !== -1;
   }
 
-  removeFromPlaylist(track) {
-    const newPlaylist = [...this.state.playlistTracks];
-    const index = _array.findIndex(newPlaylist, { 'id': track.id })
-    _array.pullAt(newPlaylist, index);
+  updateSearchResults(track) {
+    return this.state.searchResults.map(item => item.id === track.id ? track : item);
+  }
+
+  addTrackToPlaylist(track) {
+    if (this.isTrackInPlaylist(track)) return;
+
+    const newTrack = { ...track };
+    newTrack.isAdded = true; 
+
+    const newPlaylist = [...this.state.playlist];
+    newPlaylist.push(newTrack);
+
+    const newSearchResults = this.updateSearchResults(newTrack);
 
     this.setState({
-      playlistTracks: newPlaylist,
+      playlist: newPlaylist,
+      searchResults: newSearchResults,
     })
   }
 
-  removeFromSearchResults(track) {
+  removeTrackFromPlaylist(track) {    
+    const newPlaylist = [...this.state.playlist];
+    const index = newPlaylist.findIndex(item => item.id === track.id);
+    newPlaylist.splice(index, 1);
+    track.isAdded = false;
+    const newSearchResults = this.updateSearchResults(track);
 
+    this.setState({
+      playlist: newPlaylist,
+      searchResults: newSearchResults,
+    })
   }
 
   render() {
@@ -65,7 +84,7 @@ class App extends React.Component {
             <SearchResults results={this.state.searchResults} />
             <Playlist
               playlistName={this.state.playlistName}
-              playlist={this.state.playlistTracks}
+              playlist={this.state.playlist}
             />
           </div>
         </div>

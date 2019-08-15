@@ -3,11 +3,17 @@ import "./Track.css";
 
 class Track extends React.Component {
   renderAction() {
-    if (this.props.isRemoval) {
-      return <button className="Track-action">–</button>;
+    const track = this.props.track;
+    if (track.isAdded) {
+      return <button onClick={() => track.removeFromPlaylist(track)} className="Track-action">–</button>;
     } else {
-      return <button className="Track-action">+</button>;
+      return <button onClick={() => track.addToPlaylist(track)} className="Track-action">+</button>;
     }
+    // if (track.isAdded) {
+    //   return <button className="Track-action">–</button>;
+    // } else {
+    //   return <button className="Track-action">+</button>;
+    // }
   }
 
   render() {
