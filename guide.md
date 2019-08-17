@@ -1,5 +1,5 @@
 # Guide
-
+<!--
 ## Add Tracks to a Playlist
 
 ~~### Item 40~~
@@ -107,8 +107,8 @@ In Track.js, bind this.removeTrack() to the current value of this in the constru
 
 ### Item 55
 
-In the Track.js - element, add an onClick property with the value set to the this.removeTrack method.
-
+In the Track.js - element, add an onClick property with the value set to the this.removeTrack method.-->
+<!-- 
 ## Change the Name of a Playlist
 
 ### Item 56
@@ -144,7 +144,7 @@ Bind the current value of this to .handleNameChange().
 
 ### Item 61
 
-In the Playlist render method, pass .handleNameChange() to an onChange property.
+In the Playlist render method, pass .handleNameChange() to an onChange property. -->
 
 ## Create a Method that Saves the Playlist to a User's Account
 

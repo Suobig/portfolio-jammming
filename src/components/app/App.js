@@ -7,6 +7,8 @@ import Playlist from "../playlist/Playlist";
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.updatePlaylistName = this.updatePlaylistName.bind(this);
+    this.savePlaylist = this.savePlaylist.bind(this);
     this.state = {
       searchResults: [
         {
@@ -15,6 +17,7 @@ class App extends React.Component {
           artist: "The Beatles",
           album: "Help",
           isAdded: false,
+          uri: '',
           addToPlaylist: this.addTrackToPlaylist.bind(this),
           removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
         },
@@ -24,6 +27,7 @@ class App extends React.Component {
           artist: "Rihanna",
           album: "Good Girl Gone Bad",
           isAdded: false,
+          uri: '',
           addToPlaylist: this.addTrackToPlaylist.bind(this),
           removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
         }
@@ -36,10 +40,6 @@ class App extends React.Component {
   isTrackInPlaylist(track) {
     const index = this.state.playlist.findIndex(item => item.id === track.id)
     return index !== -1;
-  }
-
-  updateSearchResults(track) {
-    return this.state.searchResults.map(item => item.id === track.id ? track : item);
   }
 
   addTrackToPlaylist(track) {
@@ -72,6 +72,19 @@ class App extends React.Component {
     })
   }
 
+  updatePlaylistName(name) {    
+    this.setState({
+      playlistName: name,
+    })
+  }
+
+  savePlaylist() {
+    console.log('Saving playlist');
+    
+    const trackUris = this.state.playlist.map(track => track.uri);
+    return trackUris;
+  }
+
   render() {
     return (
       <div>
@@ -85,6 +98,8 @@ class App extends React.Component {
             <Playlist
               playlistName={this.state.playlistName}
               playlist={this.state.playlist}
+              onNameChange={this.updatePlaylistName}
+              onSave={this.savePlaylist}
             />
           </div>
         </div>
