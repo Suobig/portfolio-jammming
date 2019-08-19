@@ -1,12 +1,12 @@
 # Guide
-<!--
-## Add Tracks to a Playlist
 
-~~### Item 40~~
+<!--## Add Tracks to a Playlist
 
-~~In this section, you will implement a process for adding a song from the search results track list to the user’s custom playlist.~~
+### Item 40
 
-~~You will add a method to App.js called `addTrack` that adds a song to the playlist state. The application passes the method through a series of components to Track. The user can trigger the `.addTrack()` method by clicking the `+` sign from the search results list.~~
+In this section, you will implement a process for adding a song from the search results track list to the user’s custom playlist.
+
+You will add a method to App.js called `addTrack` that adds a song to the playlist state. The application passes the method through a series of components to Track. The user can trigger the `.addTrack()` method by clicking the `+` sign from the search results list.
 
 ### Item 41
 
@@ -108,8 +108,8 @@ In Track.js, bind this.removeTrack() to the current value of this in the constru
 ### Item 55
 
 In the Track.js - element, add an onClick property with the value set to the this.removeTrack method.-->
-<!-- 
-## Change the Name of a Playlist
+
+<!--## Change the Name of a Playlist
 
 ### Item 56
 
@@ -146,7 +146,7 @@ Bind the current value of this to .handleNameChange().
 
 In the Playlist render method, pass .handleNameChange() to an onChange property. -->
 
-## Create a Method that Saves the Playlist to a User's Account
+<!-- ## Create a Method that Saves the Playlist to a User's Account
 
 ### Item 62
 
@@ -171,9 +171,9 @@ Pass savePlaylist to the Playlist component as an attribute called onSave.
 
 ### Item 65
 
-In the Playlist.js SAVE TO SPOTIFY button element, add an onClick property with the value set to this.props.onSave.
+In the Playlist.js SAVE TO SPOTIFY button element, add an onClick property with the value set to this.props.onSave. -->
 
-## Hook up Search Bar to Spotify Search
+<!-- ## Hook up Search Bar to Spotify Search
 
 ### Item 66
 
@@ -219,9 +219,9 @@ In the SearchBar.js constructor method, bind the current value of this to this.h
 
 ### Item 73
 
-In the search bar’s `<input>` element, add an onChange attribute and set it equal to this.handleTermChange.
+In the search bar’s `<input>` element, add an onChange attribute and set it equal to this.handleTermChange. -->
 
-## Obtain a Spotify Access Token
+<!-- ## Obtain a Spotify Access Token
 
 ### Item 74
 
@@ -313,7 +313,7 @@ Give your application a relevant name and description. Also, add the following R
 ### Item 82
 
 At the top of Spotify.js create constant variables for your application’s client ID and redirect URI.
-
+       
 Set the client ID variable to the value provided on your application page.
 
 Set the redirect URI to `"http://localhost:3000/"`.
@@ -328,9 +328,9 @@ https://accounts.spotify.com/authorize?client_id=CLIENT_ID&response_type=token&s
 
 Interpolate your client ID and redirect URI variables In place of CLIENT_ID and REDIRECT_URI.
 
-> To redirect a user, you must set window.location to the URL in the task above.
+> To redirect a user, you must set window.location to the URL in the task above. -->
 
-## Implement Spotify Search Request
+<!-- ## Implement Spotify Search Request
 
 ### Item 84
 
@@ -386,7 +386,7 @@ The mapped array should contain a list of track objects with the following prope
 
 In App.js, import Spotify and update the .search() method with the Spotify.search() method.
 
-Update the state of searchResults with the value resolved from Spotify.search()‘s promise.
+Update the state of searchResults with the value resolved from Spotify.search()‘s promise. -->
 
 ## Save a User's Playlist
 

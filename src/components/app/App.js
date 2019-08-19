@@ -3,35 +3,18 @@ import "./App.css";
 import SearchBar from "../search_bar/SearchBar";
 import SearchResults from "../search_results/SearchResults";
 import Playlist from "../playlist/Playlist";
+import Spotify from "../../util/Spotify";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.changeSearchText = this.changeSearchText.bind(this);
+    this.search = this.search.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
     this.state = {
-      searchResults: [
-        {
-          id: 1,
-          name: "Help",
-          artist: "The Beatles",
-          album: "Help",
-          isAdded: false,
-          uri: '',
-          addToPlaylist: this.addTrackToPlaylist.bind(this),
-          removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
-        },
-        {
-          id: 2,
-          name: "Umbrella",
-          artist: "Rihanna",
-          album: "Good Girl Gone Bad",
-          isAdded: false,
-          uri: '',
-          addToPlaylist: this.addTrackToPlaylist.bind(this),
-          removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
-        }
-      ],
+      searchText: "",
+      searchResults: [],
       playlistName: "My Playlist",
       playlist: []
     };
@@ -78,11 +61,59 @@ class App extends React.Component {
     })
   }
 
+  updateSearchResults(track) {
+    return this.state.searchResults.map(item => item.id === track.id ? track : item);
+  }
+
   savePlaylist() {
-    console.log('Saving playlist');
+    const token = Spotify.getAccessToken();
+    console.log({token});
+
     
     const trackUris = this.state.playlist.map(track => track.uri);
     return trackUris;
+  }
+
+  changeSearchText(text) {
+    this.setState({
+      searchText: text,
+    });
+  }
+
+  async search() {
+    const searchText = this.state.searchText;
+    console.log({searchText});
+    
+    const token = Spotify.getAccessToken();
+    if (!token) return;
+
+    const results = await Spotify.search(token, searchText);
+    const jsonResults = await results.json();
+    const trackItems = jsonResults.tracks.items;
+
+    if (!trackItems) {
+      this.setState({
+        searchResults: [],
+      })
+    }   
+
+    const searchResults = trackItems.map(track => {
+      const artists = track.album.artists.map(artist => artist.name).join(', ');
+      return {
+        id: track.id,
+        name: track.name,
+        artist: artists,
+        album: track.album.name,
+        isAdded: false,
+        uri: track.uri,
+        addToPlaylist: this.addTrackToPlaylist.bind(this),
+        removeFromPlaylist: this.removeTrackFromPlaylist.bind(this),
+      }
+    });
+
+    this.setState({
+      searchResults: searchResults,
+    })
   }
 
   render() {
@@ -92,7 +123,10 @@ class App extends React.Component {
           Ja<span className="highlight">mmm</span>ing
         </h1>
         <div className="App">
-          <SearchBar />
+          <SearchBar
+            onSearchTextChange={this.changeSearchText}
+            onSearch={this.search}
+          />
           <div className="App-playlist">
             <SearchResults results={this.state.searchResults} />
             <Playlist
